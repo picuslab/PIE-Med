@@ -1,4 +1,4 @@
-# 🩺 PIE-Med: Predicting, Interpreting and Explaining Medical Recommendations 
+# 🩺 *PIE*-Med: *P*redicting, *I*nterpreting and *E*xplaining Medical Recommendations 
 
 Welcome to the repository for **PIE-Med**, a cutting-edge system designed to enhance medical decision-making through the integration of Graph Neural Networks (GNNs), Explainable AI (XAI) techniques, and Large Language Models (LLMs).
 
