@@ -31,6 +31,40 @@ PIE-Med follows a comprehensive Predict→Interpret→Explain (PIE) paradigm:
 - **Enhanced Interpretability**: Using XAI techniques to make the decision-making process transparent.
 - **Collaborative Explanation**: Multi-agent LLMs provide detailed and understandable recommendations.
 
+## 🚀 Getting Started
+Follow these steps to set up and run PIE-Med on your local machine:
+
+### Prerequisites
+Ensure you have the following installed:
+- Python 3.7+
+
+### Installation
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/picuslab/PIE-Med.git
+    cd PIE-Med
+    ```
+
+2. **Create a virtual environment**:
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    ```
+
+3. **Install the required packages**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### Running the Application
+1. **Run the Streamlit application**:
+    ```bash
+    streamlit run dashboard.py
+    ```
+
+   Open your web browser and go to `http://localhost:8501` to interact with the application.
+
+
 ## 📈 Conclusions
 PIE-Med showcases the potential of combining GNNs, XAI, and LLMs to improve medical recommendations, enhancing both accuracy and interpretability. Our system effectively separates prediction from explanation, reducing biases and enhancing decision quality.
 
