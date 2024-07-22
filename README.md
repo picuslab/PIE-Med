@@ -13,7 +13,7 @@ We use the **[MIMIC-III](https://mimic.physionet.org/)** dataset, a freely acces
 - **Pandas**: Data manipulation and analysis ([Pandas Documentation](https://pandas.pydata.org/))
 - **PyHealth**: Medical data preprocessing ([PyHealth Documentation](https://pyhealth.readthedocs.io/en/latest/))
 - **PyTorch Geometric**: Building and training GNNs ([PyTorch Geometric Documentation](https://pytorch-geometric.readthedocs.io/en/latest/))
-- **Integrated Gradients & GNNExplainer**: Interpretability techniques
+- **Integrated Gradients & GNNExplainer**: Interpretability techniques ([PyTorch Geometric Documentation](https://pytorch-geometric.readthedocs.io/en/latest/))
 - **Streamlit**: User interface development ([Streamlit Documentation](https://streamlit.io/))
 - **Py AutoGen Multi-Agent Conversation Framework**: Multi-agent collaboration and explanation ([Py AutoGen Documentation](https://microsoft.github.io/autogen/))
 
