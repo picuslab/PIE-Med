@@ -24,7 +24,8 @@ PIE-Med follows a comprehensive Predict→Interpret→Explain (PIE) paradigm:
 2. **Interpretation Phase**: Integrated Gradients and GNNExplainer techniques are used to provide insights into the GNN's decision-making process.
 3. **Explanation Phase**: A collaborative ensemble of LLM agents analyzes the model's outputs and generates comprehensive, understandable explanations.
 
-(INSERIRE IMMAGINE)
+![image](https://github.com/user-attachments/assets/dbdc70fd-4730-4c05-8aa4-de10ea1c2270)
+
 
 ## 🌟 Key Features
 - **Integration of GNNs and LLMs**: Combining structured machine learning with natural language processing for robust recommendations.
