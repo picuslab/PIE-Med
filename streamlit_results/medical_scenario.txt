@@ -1,0 +1,35 @@
+**Symptoms** presented by the patient found to be important from the system (ordered by level of importance):
+
+- Heart failure, unspecified - Importance level: 0.0133
+- Generalized pain - Importance level: 0.0116
+- Edema - Importance level: 0.0103
+- Anemia, unspecified - Importance level: 0.0102
+- Unspecified essential hypertension - Importance level: 0.01
+- Rheumatoid arthritis - Importance level: 0.0091
+- Fever, unspecified - Importance level: 0.009
+- Cerebral artery occlusion, unspecified with cerebral infarction - Importance level: 0.009
+- Systemic lupus erythematosus - Importance level: 0.0087
+- Coarctation of aorta (preductal) (postductal) - Importance level: 0.0085
+
+**Procedures** performed on the patient results important from the system (ordered by level of importance):
+
+- Transfusion of other serum - Importance level: 0.0293
+- Annuloplasty - Importance level: 0.0261
+- Extracorporeal circulation auxiliary to open heart surgery - Importance level: 0.0248
+
+Patient **diagnosis** important from the system (ordered by level of importance):
+
+- Heart valve replaced by transplant - Importance level: 0.0145
+- Cardiac complications, not elsewhere classified - Importance level: 0.0142
+- Atrioventricular block, complete - Importance level: 0.0126
+- Hemorrhage of gastrointestinal tract, unspecified - Importance level: 0.0117
+- Cirrhosis of liver without mention of alcohol - Importance level: 0.0107
+- Rheumatic heart failure (congestive) - Importance level: 0.0098
+- Acute posthemorrhagic anemia - Importance level: 0.009
+- Atrial flutter - Importance level: 0.0082
+- Hypertensive chronic kidney disease, unspecified, with chronic kidney disease stage I through stage IV, or unspecified - Importance level: 0.0082
+- Diseases of tricuspid valve - Importance level: 0.0082
+
+**Medications** already administered to the patient found important from the system (ordered by level of importance):
+
+- No medications found
