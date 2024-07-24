@@ -4,20 +4,33 @@ import autogen
 from autogen import OpenAIWrapper, AssistantAgent, UserProxyAgent
 from typing import List
 
-config_list = [
-    {
-        "model": "google/gemma-2-9b-it",
-        "base_url": "https://integrate.api.nvidia.com/v1",
-        "api_key": st.secrets.nvidia.api_key,
-    }
-]
+def setting_config(model_name: str) -> tuple[List[dict], dict]:
+    if model_name == "gpt-3.5-turbo":
+        config_list = [
+            {
+                "model": model_name,
+                "base_url": "https://api.openai.com/v1",
+                "api_key": st.secrets.openai.api_key,
+            }
+        ]
+    elif model_name == "google/gemma-2-9b-it":
+        config_list = [
+            {
+                "model": model_name, #"google/gemma-2-9b-it",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "api_key": st.secrets.nvidia.api_key,
+            }
+        ]
 
-llm_config={
-    "timeout": 500,
-    "seed": 42,
-    "config_list": config_list,
-    "temperature": 0.5
-}
+
+    llm_config={
+        "timeout": 500,
+        "seed": 42,
+        "config_list": config_list,
+        "temperature": 0.5
+    }
+
+    return config_list, llm_config
 
 
 class TrackableUserProxyAgent(UserProxyAgent):
@@ -33,7 +46,8 @@ class TrackableUserProxyAgent(UserProxyAgent):
         return super()._process_received_message(message, sender, silent)
 
 
-def doctor_recruiter(prompt_recruiter_doctors: str) -> str:
+def doctor_recruiter(prompt_recruiter_doctors: str, model_name: str) -> str:
+    config_list, llm_config = setting_config(model_name) 
     client = OpenAIWrapper(api_key=config_list[0]['api_key'], config_list=config_list)
     response = client.create(messages=[{"role": "user", "content": prompt_recruiter_doctors + "\nReturn ONLY JSON file (don't use Markdown tags like: ```json)."}], 
                             temperature=0.3, 
@@ -43,7 +57,8 @@ def doctor_recruiter(prompt_recruiter_doctors: str) -> str:
 
     return text
 
-def doctor_discussion(doctor_description: str, prompt_internist_doctor: str) -> str:
+def doctor_discussion(doctor_description: str, prompt_internist_doctor: str, model_name: str) -> str:
+    config_list, llm_config = setting_config(model_name)
     doctor = OpenAIWrapper(api_key=config_list[0]['api_key'], config_list=config_list)
     response = doctor.create(messages=[
                                         {"role": "assistant", 
@@ -57,7 +72,8 @@ def doctor_discussion(doctor_description: str, prompt_internist_doctor: str) -> 
 
     return text
 
-def multiagent_doctors(json_data: dict) -> List[AssistantAgent]:
+def multiagent_doctors(json_data: dict, model_name: str) -> List[AssistantAgent]:
+    config_list, llm_config = setting_config(model_name)
     doc = []
     for i in range(len(json_data['doctors'])):
         doc.append(AssistantAgent(
@@ -67,7 +83,8 @@ def multiagent_doctors(json_data: dict) -> List[AssistantAgent]:
 
     return doc
 
-def care_discussion_start(doc: List[AssistantAgent], prompt_reunion: str, internist_sys_message: str) -> autogen.GroupChatManager:
+def care_discussion_start(doc: List[AssistantAgent], prompt_reunion: str, internist_sys_message: str, model_name: str) -> autogen.GroupChatManager:
+    config_list, llm_config = setting_config(model_name)
     doc.append(TrackableUserProxyAgent(
         name="internist_doctor", 
         human_input_mode="NEVER", 

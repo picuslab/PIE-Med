@@ -5,6 +5,12 @@ import pandas as pd
 import torch
 from typing import Tuple, List
 
+import base64
+from base64 import b64encode
+from fpdf import FPDF
+
+
+
 from pyhealth.medcode import InnerMap
 from pyhealth.datasets import MIMIC3Dataset, SampleEHRDataset
 from pyhealth.tasks import medication_recommendation_mimic3_fn, diagnosis_prediction_mimic3_fn
@@ -150,3 +156,52 @@ def explainability(model: GNN, explain_dataset: SampleEHRDataset, selected_idx: 
     HtmlFile = open("streamlit_results/explain_graph.html", 'r', encoding='utf-8')
     source_code = HtmlFile.read() 
     components.html(source_code, height=520)
+
+
+def create_download_link(val, filename):
+        b64 = base64.b64encode(val)  # val looks like b'...'
+        return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}.pdf">Download file</a>'
+
+
+def gen_pdf(patient, name, lastname, visit, list_output, medical_scenario, internist_scenario):
+    pdf = FPDF()
+    pdf.add_page()
+    
+    # Title
+    pdf.set_font("Arial", 'B', 14)
+    pdf.cell(0, 10, 'Patient Medical Report', 0, 1, 'C')
+    pdf.ln(5)
+    
+    # Patient Info
+    pdf.set_font("Arial", 'B', 10)
+    pdf.cell(0, 10, 'Patient Information', 0, 1, 'L')
+    pdf.set_font("Arial", '', 8)
+    pdf.cell(0, 3, f"Patient ID: {patient} - Name: {name.split('[')[1].split(']')[0]} Surname: {lastname} - Visit n°: {visit}", 0, 1, 'L')
+    pdf.ln(5)  
+
+    # Recommendations
+    pdf.set_font("Arial", 'B', 10)
+    pdf.cell(0, 10, 'Recommendations', 0, 1, 'L')
+    pdf.set_font("Arial", '', 8)
+    for i, output in enumerate(list_output):
+        tensor_value = output[0].item()  # Convert tensor to number
+        recommendation = output[1]
+        pdf.cell(0, 3, f"Medication {i+1}: {tensor_value}, {recommendation}", 0, 1, 'L')
+    pdf.ln(5)
+
+    # medical_scenario
+    pdf.set_font("Arial", 'B', 10)
+    pdf.cell(0, 10, 'Medical Scenario', 0, 1, 'L')
+    pdf.set_font("Arial", '', 8)
+    pdf.multi_cell(0, 3, medical_scenario, 0, 1, 'L')
+    pdf.ln(5)
+
+    # internist_scenario
+    pdf.set_font("Arial", 'B', 10)
+    pdf.cell(0, 10, 'Internist Scenario', 0, 1, 'L')
+    pdf.set_font("Arial", '', 8)
+    pdf.multi_cell(0, 3, internist_scenario, 0, 1, 'L')
+    pdf.ln(5)
+    
+
+    return pdf.output(dest='S').encode('latin-1')

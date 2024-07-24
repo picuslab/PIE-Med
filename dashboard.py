@@ -5,6 +5,9 @@ import json
 import shutil
 from faker import Faker
 
+from fpdf import FPDF
+
+
 PATH_MED  = "model/medication_recommendation/best.ckpt"
 PATH_DIAG = "model/diagnosis_prediction/best.ckpt"
 shutil.rmtree(".cache/", ignore_errors=True)
@@ -369,8 +372,11 @@ def main():
 
 
     ####################### CARE AI module ##################################
+
     st.header('🩺🧠 *C*ollaborative *A*gents *RE*asoning')
     st.caption("The following section is dedicated to the CARE module, which is responsible for generating the analysis of the doctors' proposals and the collaborative discussion between the medical team members for the final decision on the patient's treatment.")
+
+    model_name = st.selectbox("Select the LLM model for the CARE module", options=["gpt-3.5-turbo", "google/gemma-2-9b-it"])
 
     explanation = st.button("Generate explanation")
     if not(explanation):
@@ -391,7 +397,7 @@ def main():
         with st.status("Recruiting doctor...", expanded=False) as status:
             with open("streamlit_results/prompt_recruiter_doctors.txt", "r") as f:
                 prompt_recruiter_doctors = f.read()
-            text = doctor_recruiter(prompt_recruiter_doctors)
+            text = doctor_recruiter(prompt_recruiter_doctors, model_name)
             json_data = json.loads(str(text[0]))
             with open("streamlit_results/recruited_doctors.json", "w") as f:
                 json.dump(text[0], f, indent=4)
@@ -420,13 +426,14 @@ def main():
                 with st.chat_message(name="user", avatar="streamlit_images/{}.png".format(i)):
                     analysis = """"""
                     analysis += f"""**Doctor**: {json_data['doctors'][i]['role'].replace(" ", "_")}\n\n"""
-                    text = doctor_discussion(json_data['doctors'][i]['role'], prompt_internist_doctor)
+                    text = doctor_discussion(json_data['doctors'][i]['role'], prompt_internist_doctor, model_name)
                     analysis += "**Analysis**: " + text[0]
                     st.markdown(f"**Analysis**: {text[0]}")
                     status_doc.update(label="The 👨‍⚕️ {} analysed!".format(json_data['doctors'][i]['role'].replace('_', ' ')), state="complete", expanded=True)
                     prompt_reunion += f"""{analysis}"""
                     prompt_reunion += f"\n--------------------------------------------------\n\n"
 
+    
     image, text = st.columns([0.2, 0.8])
     with image: 
         st.image("streamlit_images/collaborative.png")
@@ -438,12 +445,21 @@ def main():
         internist_sys_message = f"""As an INTERNIST DOCTOR, you have the task of globally evaluating and managing the patient's health and pathology.\n"""
         internist_sys_message += f"""In the light of the entire discussion, you must provide a final schematic report to the doctor based on the recommendation and the doctors' opinions."""
 
-        doc = multiagent_doctors(json_data)
-        manager = care_discussion_start(doc, prompt_reunion, internist_sys_message)
+        doc = multiagent_doctors(json_data, model_name)
+        manager = care_discussion_start(doc, prompt_reunion, internist_sys_message, model_name)
 
         with st.chat_message(name="user", avatar="streamlit_images/internist.png"):
             internist = list(manager.chat_messages.values())
             st.write(f"**{internist[0][6]['name'].replace('_',' ')}**: {internist[0][6]['content']}")
+
+        # Add a download button:
+        st.download_button(
+            label="Download PDF",
+            data=gen_pdf(patient, name, lastname, visit, list_output, medical_scenario, internist[0][6]['content']),
+            file_name="file_name.pdf",
+            mime="application/pdf",
+        )
+
 
 
 if __name__ == "__main__":
