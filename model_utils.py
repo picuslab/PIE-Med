@@ -3,19 +3,16 @@ import streamlit.components.v1 as components
 import numpy as np
 import pandas as pd
 import torch
+
 from typing import Tuple, List
-
-import base64
-from base64 import b64encode
 from fpdf import FPDF
-
-
 
 from pyhealth.medcode import InnerMap
 from pyhealth.datasets import MIMIC3Dataset, SampleEHRDataset
 from pyhealth.tasks import medication_recommendation_mimic3_fn, diagnosis_prediction_mimic3_fn
 from pyhealth.models import GNN
 from pyhealth.explainer import HeteroGraphExplainer
+
 
 @st.cache_resource(hash_funcs={torch.nn.parameter.Parameter: lambda _: None})
 def load_gnn() -> Tuple[torch.nn.Module, torch.nn.Module, torch.nn.Module, torch.nn.Module,
@@ -71,6 +68,7 @@ def load_gnn() -> Tuple[torch.nn.Module, torch.nn.Module, torch.nn.Module, torch
 
     return model_med_ig, model_med_gnn, model_diag_ig, model_diag_gnn, dataset, mimic3sample_med, mimic3sample_diag
 
+
 @st.cache_data(hash_funcs={torch.Tensor: lambda _: None})
 def get_list_output(y_prob: torch.Tensor, last_visit: pd.DataFrame, task: str, _mimic3sample: SampleEHRDataset, 
                    top_k: int = 10) -> List[str]:
@@ -109,6 +107,7 @@ def get_list_output(y_prob: torch.Tensor, last_visit: pd.DataFrame, task: str, _
         list_output.append(sample_list_output)
 
     return list_output, sorted_indices
+
 
 def explainability(model: GNN, explain_dataset: SampleEHRDataset, selected_idx: int, 
                    visualization: str, algorithm: str, task: str, threshold: int):
@@ -158,50 +157,46 @@ def explainability(model: GNN, explain_dataset: SampleEHRDataset, selected_idx: 
     components.html(source_code, height=520)
 
 
-def create_download_link(val, filename):
-        b64 = base64.b64encode(val)  # val looks like b'...'
-        return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}.pdf">Download file</a>'
-
-
 def gen_pdf(patient, name, lastname, visit, list_output, medical_scenario, internist_scenario):
     pdf = FPDF()
     pdf.add_page()
-    
+    pdf.add_font("OpenSans", style="", fname="font/OpenSans.ttf")
+    pdf.add_font("OpenSans", style="B", fname="font/OpenSans-Bold.ttf")
+
     # Title
-    pdf.set_font("Arial", 'B', 14)
-    pdf.cell(0, 10, 'Patient Medical Report', 0, 1, 'C')
+    pdf.set_font("OpenSans", 'B', 14)
+    pdf.cell(0, 10, 'Patient Medical Report', 0, 1, 'C', markdown=True)
     pdf.ln(5)
-    
+
     # Patient Info
-    pdf.set_font("Arial", 'B', 10)
-    pdf.cell(0, 10, 'Patient Information', 0, 1, 'L')
-    pdf.set_font("Arial", '', 8)
-    pdf.cell(0, 3, f"Patient ID: {patient} - Name: {name.split('[')[1].split(']')[0]} Surname: {lastname} - Visit n°: {visit}", 0, 1, 'L')
-    pdf.ln(5)  
+    pdf.set_font("OpenSans", 'B', 10)
+    pdf.cell(0, 10, 'Patient Information', 0, 1, 'L', markdown=True)
+    pdf.set_font("OpenSans", '', 8)
+    pdf.cell(0, 3, f"Patient ID: {patient} - Name: {name.split('[')[1].split(']')[0]} Surname: {lastname} - Visit n°: {visit}", 0, 1, 'L', markdown=True)
+    pdf.ln(5)
 
     # Recommendations
-    pdf.set_font("Arial", 'B', 10)
-    pdf.cell(0, 10, 'Recommendations', 0, 1, 'L')
-    pdf.set_font("Arial", '', 8)
+    pdf.set_font("OpenSans", 'B', 10)
+    pdf.cell(0, 10, 'Recommendations', 0, 1, 'L', markdown=True)
+    pdf.set_font("OpenSans", '', 8)
     for i, output in enumerate(list_output):
         tensor_value = output[0].item()  # Convert tensor to number
         recommendation = output[1]
-        pdf.cell(0, 3, f"Medication {i+1}: {tensor_value}, {recommendation}", 0, 1, 'L')
+        pdf.cell(0, 3, f"Medication {i+1}: {tensor_value}, {recommendation}", 0, 1, 'L', markdown=True)
     pdf.ln(5)
 
     # medical_scenario
-    pdf.set_font("Arial", 'B', 10)
-    pdf.cell(0, 10, 'Medical Scenario', 0, 1, 'L')
-    pdf.set_font("Arial", '', 8)
-    pdf.multi_cell(0, 3, medical_scenario, 0, 1, 'L')
+    pdf.set_font("OpenSans", 'B', 10)
+    pdf.cell(0, 10, 'Medical Scenario', 0, 1, 'L', markdown=True)
+    pdf.set_font("OpenSans", '', 8)
+    pdf.multi_cell(0, 3, medical_scenario, 0, 'L', markdown=True)
     pdf.ln(5)
 
     # internist_scenario
-    pdf.set_font("Arial", 'B', 10)
-    pdf.cell(0, 10, 'Internist Scenario', 0, 1, 'L')
-    pdf.set_font("Arial", '', 8)
-    pdf.multi_cell(0, 3, internist_scenario, 0, 1, 'L')
+    pdf.set_font("OpenSans", 'B', 10)
+    pdf.cell(0, 10, 'Internist Scenario', 0, 1, 'L', markdown=True)
+    pdf.set_font("OpenSans", '', 8)
+    pdf.multi_cell(0, 3, internist_scenario, 0, 'L', markdown=True)
     pdf.ln(5)
-    
 
-    return pdf.output(dest='S').encode('latin-1')
+    return bytes(pdf.output())

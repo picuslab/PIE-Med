@@ -5,14 +5,15 @@ import json
 import shutil
 from faker import Faker
 
-from fpdf import FPDF
-
 
 PATH_MED  = "model/medication_recommendation/best.ckpt"
 PATH_DIAG = "model/diagnosis_prediction/best.ckpt"
-shutil.rmtree(".cache/", ignore_errors=True)
+# shutil.rmtree(".cache/", ignore_errors=True)
+
 
 def main():
+
+
     # ---- SETTINGS PAGE ----
     st.set_page_config(page_title="PIE-Med - Dashboard", page_icon="🩺", layout="wide")
 
@@ -372,11 +373,10 @@ def main():
 
 
     ####################### CARE AI module ##################################
-
     st.header('🩺🧠 *C*ollaborative *A*gents *RE*asoning')
     st.caption("The following section is dedicated to the CARE module, which is responsible for generating the analysis of the doctors' proposals and the collaborative discussion between the medical team members for the final decision on the patient's treatment.")
 
-    model_name = st.selectbox("Select the LLM model for the CARE module", options=["gpt-3.5-turbo", "google/gemma-2-9b-it"])
+    model_name = st.selectbox("Select the LLM model for the CARE module", options=["gpt-4o", "gpt-3.5-turbo", "google/gemma-2-9b-it", "meta/llama3-8b-instruct", "mistralai/mistral-7b-instruct-v0.2"])
 
     explanation = st.button("Generate explanation")
     if not(explanation):
@@ -433,14 +433,13 @@ def main():
                     prompt_reunion += f"""{analysis}"""
                     prompt_reunion += f"\n--------------------------------------------------\n\n"
 
-    
     image, text = st.columns([0.2, 0.8])
     with image: 
         st.image("streamlit_images/collaborative.png")
     with text:
         st.subheader('*CARE* Discussion')
 
-    st.caption("The following discussion is based on the **Large Language Model** (LLM) **GPT-3.5-turbo**. The LLM is responsible for generating the discussion between the medical team members for the final decision on the patient's treatment.")
+    st.caption("The following discussion is based on the **Large Language Model** (LLM) **chosen**. The LLM is responsible for generating the discussion between the medical team members for the final decision on the patient's treatment.")
     with st.spinner("Doctors are discussing..."):
         internist_sys_message = f"""As an INTERNIST DOCTOR, you have the task of globally evaluating and managing the patient's health and pathology.\n"""
         internist_sys_message += f"""In the light of the entire discussion, you must provide a final schematic report to the doctor based on the recommendation and the doctors' opinions."""
@@ -450,16 +449,16 @@ def main():
 
         with st.chat_message(name="user", avatar="streamlit_images/internist.png"):
             internist = list(manager.chat_messages.values())
-            st.write(f"**{internist[0][6]['name'].replace('_',' ')}**: {internist[0][6]['content']}")
+            internist_opinion = internist[0][6]['content']
+            st.write(f"**{internist[0][6]['name'].replace('_',' ')}**: {internist_opinion}")
 
         # Add a download button:
         st.download_button(
-            label="Download PDF",
-            data=gen_pdf(patient, name, lastname, visit, list_output, medical_scenario, internist[0][6]['content']),
-            file_name="file_name.pdf",
-            mime="application/pdf",
+            label="Download PDF", 
+            data=gen_pdf(patient, name, lastname, visit, list_output, medical_scenario, internist_opinion), 
+            file_name=f"Medical_Report_Patient_{patient}.pdf", 
+            mime="application/pdf", 
         )
-
 
 
 if __name__ == "__main__":
