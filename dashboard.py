@@ -8,7 +8,7 @@ from faker import Faker
 
 PATH_MED  = "model/medication_recommendation/best.ckpt"
 PATH_DIAG = "model/diagnosis_prediction/best.ckpt"
-# shutil.rmtree(".cache/", ignore_errors=True)
+#shutil.rmtree(".cache/", ignore_errors=True)
 
 
 def main():
@@ -374,9 +374,9 @@ def main():
 
     ####################### CARE AI module ##################################
     st.header('🩺🧠 *C*ollaborative *A*gents *RE*asoning')
-    st.caption("The following section is dedicated to the CARE module, which is responsible for generating the analysis of the doctors' proposals and the collaborative discussion between the medical team members for the final decision on the patient's treatment.")
+    st.caption("The following section is dedicated to the Explainability module, which is responsible for generating the analysis of the doctors' proposals and the collaborative discussion between the medical team members for the final decision on the patient's treatment.")
 
-    model_name = st.selectbox("Select the LLM model for the CARE module", options=["gpt-4o", "gpt-3.5-turbo", "google/gemma-2-9b-it", "meta/llama3-8b-instruct", "mistralai/mistral-7b-instruct-v0.2"])
+    model_name = st.selectbox("Select the LLM model", options=["gpt-4o-mini", "gpt-3.5-turbo", "google/gemma-2-9b-it", "meta/llama3-8b-instruct", "mistralai/mistral-7b-instruct-v0.2"])
 
     explanation = st.button("Generate explanation")
     if not(explanation):
@@ -437,7 +437,7 @@ def main():
     with image: 
         st.image("streamlit_images/collaborative.png")
     with text:
-        st.subheader('*CARE* Discussion')
+        st.subheader('Discussion')
 
     st.caption("The following discussion is based on the **Large Language Model** (LLM) **chosen**. The LLM is responsible for generating the discussion between the medical team members for the final decision on the patient's treatment.")
     with st.spinner("Doctors are discussing..."):

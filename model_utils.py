@@ -172,27 +172,37 @@ def gen_pdf(patient, name, lastname, visit, list_output, medical_scenario, inter
     pdf.set_font("OpenSans", 'B', 10)
     pdf.cell(0, 10, 'Patient Information', 0, 1, 'L', markdown=True)
     pdf.set_font("OpenSans", '', 8)
-    pdf.cell(0, 3, f"Patient ID: {patient} - Name: {name.split('[')[1].split(']')[0]} Surname: {lastname} - Visit n°: {visit}", 0, 1, 'L', markdown=True)
+    pdf.cell(0, 3, f"Patient ID: {patient} - Name: **{name.split('[')[1].split(']')[0]}** Surname: **{lastname}** - Visit n°: {visit}", 0, 1, 'L', markdown=True)
     pdf.ln(5)
 
-    # Recommendations
+    # Left column (Medical Scenario)
+    left_x = 10
+    right_x = 110
+    col_width = 90
+
+    # Right column (Recommendations)
+    pdf.set_xy(right_x, pdf.get_y())
     pdf.set_font("OpenSans", 'B', 10)
-    pdf.cell(0, 10, 'Recommendations', 0, 1, 'L', markdown=True)
+    pdf.cell(col_width - 20, 10, 'Recommendations', 0, 1, 'L')
+    pdf.set_xy(right_x, pdf.get_y())
     pdf.set_font("OpenSans", '', 8)
     for i, output in enumerate(list_output):
         tensor_value = output[0].item()  # Convert tensor to number
         recommendation = output[1]
-        pdf.cell(0, 3, f"Medication {i+1}: {tensor_value}, {recommendation}", 0, 1, 'L', markdown=True)
-    pdf.ln(5)
+        pdf.set_xy(right_x, pdf.get_y())
+        pdf.cell(col_width - 20, 3, f"Medication {i+1}: {tensor_value}, {recommendation}", 0, 1, 'L')
 
-    # medical_scenario
+
+    # Medical Scenario
+    pdf.set_xy(left_x, pdf.get_y() - 40)
     pdf.set_font("OpenSans", 'B', 10)
-    pdf.cell(0, 10, 'Medical Scenario', 0, 1, 'L', markdown=True)
+    pdf.cell(col_width, 10, 'Medical Scenario', 0, 1, 'L', markdown=True)
+    pdf.set_xy(left_x, pdf.get_y())
     pdf.set_font("OpenSans", '', 8)
-    pdf.multi_cell(0, 3, medical_scenario, 0, 'L', markdown=True)
-    pdf.ln(5)
+    pdf.multi_cell(col_width, 3, medical_scenario, 0, 'L', markdown=True)
 
     # internist_scenario
+    pdf.set_xy(left_x, pdf.get_y())
     pdf.set_font("OpenSans", 'B', 10)
     pdf.cell(0, 10, 'Internist Scenario', 0, 1, 'L', markdown=True)
     pdf.set_font("OpenSans", '', 8)
