@@ -172,7 +172,7 @@ def gen_pdf(patient, name, lastname, visit, list_output, medical_scenario, inter
     pdf.set_font("OpenSans", 'B', 10)
     pdf.cell(0, 10, 'Patient Information', 0, 1, 'L', markdown=True)
     pdf.set_font("OpenSans", '', 8)
-    pdf.cell(0, 3, f"Patient ID: {patient} - Name: **{name.split('[')[1].split(']')[0]}** Surname: **{lastname}** - Visit n°: {visit}", 0, 1, 'L', markdown=True)
+    pdf.cell(0, 3, f"Patient ID: **{patient}** - Name: **{name.split('[')[1].split(']')[0]}** Surname: **{lastname}** - Hospital admission n°: **{visit}**", 0, 1, 'L', markdown=True)
     pdf.ln(5)
 
     # Left column (Medical Scenario)
