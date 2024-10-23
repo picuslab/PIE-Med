@@ -68,6 +68,10 @@ Ensure you have the following installed:
 ## 📈 Conclusions
 PIE-Med showcases the potential of combining GNNs, XAI, and LLMs to improve medical recommendations, enhancing both accuracy and interpretability. Our system effectively separates prediction from explanation, reducing biases and enhancing decision quality.
 
+## ⚖ Ethical considerations
+
+**PIE-Med** aims to support medical decision-making, but is not a substitute for professional medical advice. Users should confirm recommendations with authorised healthcare providers, as limitations of AI may affect accuracy. The system ensures transparency through interpretability techniques, but all results should be considered complementary to expert advice. **⚠️ Please note that the following repository is only a DEMO, with anonymised data used for illustrative purposes only**. 
+
 ## 🙏 Acknowledgments
 We extend our gratitude to the creators of the MIMIC-III database, the developers of the Python libraries used, and our research team for their contributions to this project.
 
