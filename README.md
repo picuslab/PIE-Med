@@ -3,7 +3,7 @@
 Welcome to the repository for **PIE-Med**, a cutting-edge system designed to enhance medical decision-making through the integration of Graph Neural Networks (GNNs), Explainable AI (XAI) techniques, and Large Language Models (LLMs).
 
 ## 🎥 Demo (or GIF)
-[Watch our demo](link_to_demo) to see PIE-Med in action and learn how it can transform healthcare recommendations!
+[Watch our demo](https://drive.google.com/file/d/1e9VXslnBzOOp5QHh4GTrT-La1PdKxhzS/preview) to see PIE-Med in action and learn how it can transform healthcare recommendations!
 
 ## 📊 Data Source
 We use the **[MIMIC-III](https://mimic.physionet.org/)** dataset, a freely accessible critical care database containing de-identified health information, including vital signs, laboratory test results, medications, and more. You can find more details about the dataset here:
