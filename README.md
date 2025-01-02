@@ -17,6 +17,8 @@ We use the **[MIMIC-III](https://mimic.physionet.org/)** dataset, a freely acces
 - **Streamlit**: User interface development ([Streamlit Documentation](https://streamlit.io/))
 - **Py AutoGen Multi-Agent Conversation Framework**: Multi-agent collaboration and explanation ([Py AutoGen Documentation](https://microsoft.github.io/autogen/))
 
+The PIE-Med system's computational requirements depend on the configuration used. For resource-limited environments, the light configuration with an Intel i7 CPU and 16GB RAM offers a basic but functional setup, suitable for testing on small datasets. However, more demanding tasks, such as working with larger datasets or leveraging advanced machine learning techniques (e.g., Graph Neural Networks), benefit from cloud setups like the complete configuration, which includes a GPU (NVIDIA Tesla T4). In resource-constrained contexts, optimizing models and reducing dataset size would be crucial to ensure feasible performance.
+
 ## 🔬 Methodological Workflow
 PIE-Med follows a comprehensive Predict→Interpret→Explain (PIE) paradigm:
 
@@ -63,7 +65,6 @@ Ensure you have the following installed:
     ```
 
    Open your web browser and go to `http://localhost:8501` to interact with the application.
-
 
 ## 📈 Conclusions
 PIE-Med showcases the potential of combining GNNs, XAI, and LLMs to improve medical recommendations, enhancing both accuracy and interpretability. Our system effectively separates prediction from explanation, reducing biases and enhancing decision quality.
