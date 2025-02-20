@@ -1,4 +1,5 @@
 # 🩺 *PIE*-Med: *P*redicting, *I*nterpreting and *E*xplaining Medical Recommendations 
+[![CC BY-NC 4.0][cc-by-nc-shield]][cc-by-nc]
 
 Welcome to the repository for **PIE-Med**, a cutting-edge system designed to enhance medical decision-making through the integration of Graph Neural Networks (GNNs), Explainable AI (XAI) techniques, and Large Language Models (LLMs).
 
@@ -77,3 +78,14 @@ PIE-Med showcases the potential of combining GNNs, XAI, and LLMs to improve medi
 We extend our gratitude to the creators of the MIMIC-III database, the developers of the Python libraries used, and our research team for their contributions to this project.
 
 👨‍💻 This project was developed by Antonio Romano, Giuseppe Riccio, Marco Postiglione and Vincenzo Moscato
+
+## 📜 License
+
+This work is licensed under a
+[Creative Commons Attribution-NonCommercial 4.0 International License][cc-by-nc].
+
+[![CC BY-NC 4.0][cc-by-nc-image]][cc-by-nc]
+
+[cc-by-nc]: https://creativecommons.org/licenses/by-nc/4.0/
+[cc-by-nc-image]: https://licensebuttons.net/l/by-nc/4.0/88x31.png
+[cc-by-nc-shield]: https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg
