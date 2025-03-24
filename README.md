@@ -1,5 +1,12 @@
 # 🩺 *PIE*-Med: *P*redicting, *I*nterpreting and *E*xplaining Medical Recommendations 
-[![CC BY-NC 4.0][cc-by-nc-shield]][cc-by-nc]
+
+<div align="center">
+    <a href="https://huggingface.co/spaces/praiselab-picuslab/PIE-Med" target="_blank"><img alt="PIE-Med"
+        src="https://img.shields.io/badge/HuggingFace-PIE--Med-grey?style=for-the-badge&logo=huggingface&logoSize=auto&color=gold"/></a>
+    <a href="LICENSE" target="_blank"><img alt="License"
+        src="https://img.shields.io/badge/license-cc_by_nc_4.0-gray?style=for-the-badge&logo=creativecommons&logoColor=white&logoSize=auto&color=green"/></a>
+</div>
+<hr>
 
 Welcome to the repository for **PIE-Med**, a cutting-edge system designed to enhance medical decision-making through the integration of Graph Neural Networks (GNNs), Explainable AI (XAI) techniques, and Large Language Models (LLMs).
 
