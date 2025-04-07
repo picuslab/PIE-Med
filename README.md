@@ -1,5 +1,13 @@
 # 🩺 *PIE*-Med: *P*redicting, *I*nterpreting and *E*xplaining Medical Recommendations 
 
+<div align="center">
+    <a href="https://huggingface.co/spaces/praiselab-picuslab/PIE-Med" target="_blank"><img alt="PIE-Med"
+        src="https://img.shields.io/badge/HuggingFace-PIE--Med-grey?style=for-the-badge&logo=huggingface&logoSize=auto&color=gold"/></a>
+    <a href="LICENSE" target="_blank"><img alt="License"
+        src="https://img.shields.io/badge/license-cc_by_nc_4.0-gray?style=for-the-badge&logo=creativecommons&logoColor=white&logoSize=auto&color=green"/></a>
+</div>
+<hr>
+
 Welcome to the repository for **PIE-Med**, a cutting-edge system designed to enhance medical decision-making through the integration of Graph Neural Networks (GNNs), Explainable AI (XAI) techniques, and Large Language Models (LLMs).
 
 ## 🎥 Demo (or GIF)
@@ -77,3 +85,14 @@ PIE-Med showcases the potential of combining GNNs, XAI, and LLMs to improve medi
 We extend our gratitude to the creators of the MIMIC-III database, the developers of the Python libraries used, and our research team for their contributions to this project.
 
 👨‍💻 This project was developed by Antonio Romano, Giuseppe Riccio, Marco Postiglione and Vincenzo Moscato
+
+## 📜 License
+
+This work is licensed under a
+[Creative Commons Attribution-NonCommercial 4.0 International License][cc-by-nc].
+
+[![CC BY-NC 4.0][cc-by-nc-image]][cc-by-nc]
+
+[cc-by-nc]: https://creativecommons.org/licenses/by-nc/4.0/
+[cc-by-nc-image]: https://licensebuttons.net/l/by-nc/4.0/88x31.png
+[cc-by-nc-shield]: https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg
