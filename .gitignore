@@ -1,3 +1,5 @@
 __pycache__
+.cache
 .venv
 .streamlit
+streamlit_results/
