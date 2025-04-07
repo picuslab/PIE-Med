@@ -2,13 +2,12 @@ from chat_utils import *
 from model_utils import *
 
 import json
-import shutil
 from faker import Faker
 
 
 PATH_MED  = "model/medication_recommendation/best.ckpt"
 PATH_DIAG = "model/diagnosis_prediction/best.ckpt"
-#shutil.rmtree(".cache/", ignore_errors=True)
+# shutil.rmtree(".cache/", ignore_errors=True)
 
 
 def main():
@@ -16,9 +15,9 @@ def main():
     # ---- SETTINGS PAGE ----
     st.set_page_config(page_title="PIE-Med - Dashboard", page_icon="🩺", layout="wide")
 
-    with open('css/style.css') as f:
-        hide_streamlit_style = f.read()
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+    # with open('css/style.css') as f:
+    #     hide_streamlit_style = f.read()
+    # st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
     # ---- SESSION STATE ----
     if 'patient' not in st.session_state:
@@ -376,20 +375,23 @@ def main():
     st.header('🩺🧠 Medical Agents Evaluation')
     st.caption("The section shown as follows is dedicated to the Explainability module, which is responsible for generating the analysis of the doctors' proposals and the collaborative discussion between the medical team members for the final decision on the patient's treatment.")
 
-    model_name = st.selectbox("Select the LLM model", options=["gpt-4o-mini", "gpt-3.5-turbo", "google/gemma-2-9b-it", "meta/llama3-8b-instruct", "mistralai/mistral-7b-instruct-v0.2"])
+    model_name = st.selectbox("Select the LLM model", options=["gpt-4o-mini", "gpt-3.5-turbo", "meta/llama3-8b-instruct"])  # ["gpt-4o-mini", "gpt-3.5-turbo", "google/gemma-2-9b-it", "meta/llama3-8b-instruct", "mistralai/mistral-7b-instruct-v0.2"]
 
     explanation = st.button("Generate explanation")
     if not(explanation):
         st.stop()
 
-    col1, col2 = st.columns([0.44, 0.56], gap="large")
+    col1, col2 = st.columns([0.5, 0.6], gap="large")
 
     with col1:
         with open("streamlit_results/medical_scenario.txt", "r") as f:
             medical_scenario = f.read()
         st.subheader("📄 Medical Scenario")
         st.caption(f"The scenario shown as follows for the patient in the **hospital admission n°: {format(last_visit['visit_id'].item())}** is provided by the medical team.")
-        st.markdown(medical_scenario)
+        st.markdown('###')
+        with st.expander("👁️ Read the medical scenario", expanded=True):
+            container = st.container(height=1145)
+            container.write(medical_scenario)
 
     with col2:
         st.subheader("👨‍⚕️🔎 Doctor Recruiter")
@@ -398,6 +400,8 @@ def main():
             with open("streamlit_results/prompt_recruiter_doctors.txt", "r") as f:
                 prompt_recruiter_doctors = f.read()
             text = doctor_recruiter(prompt_recruiter_doctors, model_name)
+            if model_name == "meta/llama3-8b-instruct":
+                text[0] = text[0].split("Here is the JSON file:\n\n")[1]
             json_data = json.loads(str(text[0]))
             with open("streamlit_results/recruited_doctors.json", "w") as f:
                 json.dump(text[0], f, indent=4)
