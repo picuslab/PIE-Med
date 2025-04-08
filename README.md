@@ -10,6 +10,21 @@
 
 Welcome to the repository for **PIE-Med**, a cutting-edge system designed to enhance medical decision-making through the integration of Graph Neural Networks (GNNs), Explainable AI (XAI) techniques, and Large Language Models (LLMs).
 
+Certo! Ecco come puoi aggiungere una sezione di **citazione** alla fine del README, in linea con il tono e lo stile già presenti:
+
+---
+
+## 📝 Citation
+
+If you use **PIE-Med** in your research or find it helpful, please cite our work:
+
+> Romano, A., Riccio, G., Postiglione, M., & Moscato, V. (2024). *PIE-Med: Predicting, Interpreting and Explaining Medical Recommendations*. In: Esposito, F., Basili, R., Ferilli, S., Cuzzocrea, A. (eds) AIxIA 2023 – Advances in Artificial Intelligence. AIxIA 2023. Lecture Notes in Computer Science(), vol 14563. Springer, Cham. [https://doi.org/10.1007/978-3-031-88720-8_2](https://doi.org/10.1007/978-3-031-88720-8_2)
+
+---
+
+Fammi sapere se vuoi anche un badge per la citazione o una sezione più visiva simile a quella dei badge in cima al README!
+
+
 ## 🎥 Demo (or GIF)
 [Watch our demo](https://drive.google.com/file/d/1e9VXslnBzOOp5QHh4GTrT-La1PdKxhzS/preview) to see PIE-Med in action and learn how it can transform healthcare recommendations!
 
